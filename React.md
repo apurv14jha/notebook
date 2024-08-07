@@ -23,8 +23,11 @@
 
 ### Why does Redux recommend Redux Toolkit as the preferred way to use Redux?
 
-- Redux recommends Redux Toolkit as the preferred way to use Redux because it significantly reduces boilerplate code, enforces best practices, and provides a more enjoyable development experience.
-- It also incorporates essential features like middleware and immutability helpers, making it a comprehensive solution for Redux-based applications.
+- Redux recommends Redux Toolkit as the preferred way to use Redux because it:
+  1.  significantly reduces boilerplate code
+  2.  enforces best practices
+  3.  provides a more enjoyable development experience.
+  4.  incorporates essential features like middleware and immutability helpers
 
 ### What are the components of Redux?
 
@@ -32,10 +35,10 @@
 
 ### What is the Redux workflow?
 
-1.  State definition: Define the initial state and reducers using createSlice.
-2.  Action creation: _createSlice_ automatically generates action creators and action types.
-3.  Reducer logic: Write reducer functions within createSlice to handle actions and update the state.
-4.  Store creation: Use _configureStore_ to create the Redux store, which can include multiple slices.
-5.  Dispatching actions: Components dispatch actions using the _dispatch_ function.
-6.  State updates: Reducers process dispatched actions and return the new state.
-7.  Re-rendering: Components re-render based on the updated state from the store, typically accessed via _useSelector_.
+1.  **State definition:** Define the initial state and reducers using createSlice.
+2.  **Action creation:** _createSlice_ automatically generates action creators and action types.
+3.  **Reducer logic:** Write reducer functions within createSlice to handle actions and update the state.
+4.  **Store creation:** Use _configureStore_ to create the Redux store, which can include multiple slices.
+5.  **Dispatching actions:** Components dispatch actions using the _dispatch_ function.
+6.  **State updates:** Reducers process dispatched actions and return the new state.
+7.  **Re-rendering:** Components re-render based on the updated state from the store, typically accessed via _useSelector_.
