@@ -266,3 +266,76 @@ function lcm(a, b) {
 - **Time Complexity:** O(log min(a, b))
 - **Auxiliary Space:** O(log min(a, b))
 <hr>
+
+### Check for Prime
+
+Check if a number is a prime number.
+
+#### Solution 1: Efficient Method
+
+##### _Explanation_
+
+> This method of checking if a number `n` is prime leverages the property that a composite number must have a factor less than or equal to its square root. Instead of checking all numbers up to `n-1`, this approach reduces the number of checks by only considering divisors up to the square root of `n`.
+>
+> **Core Idea:**
+>
+> 1. **Reducing the Number of Iterations:**
+>       - Any non-prime number `n` can be factored into two factors, one of which is less than or equal to the square root of `n`. If `n` has a divisor greater than its square root, then it must also have a smaller divisor that is less than or equal to the square root.
+>
+> 2. **Efficient Divisibility Check:**
+>       - By iterating only up to the square root of `n`, this method significantly reduces the number of checks needed to determine if `n` is prime, making it much more efficient, especially for large numbers.
+>
+> This method is a common and effective way to check for primality, striking a balance between simplicity and computational efficiency.
+
+#### Solution 2: More Efficient Method (for large numbers)
+
+##### _Explanation_
+
+> This method enhances the efficiency of prime number checking by incorporating a few optimizations beyond the basic approach. It takes advantage of patterns in prime numbers to minimize unnecessary checks, making it particularly effective for large numbers.
+>
+> **Core Idea:**
+>
+> 1. **Initial Special Cases:**
+>       - The function first handles specific small cases:
+>         - `n = 1` is immediately deemed non-prime.
+>         - `n = 2` and `n = 3` are recognized as prime numbers.
+>       - It also checks divisibility by `2` and `3` early on since any even number or a multiple of `3` (other than `2` and `3` themselves) cannot be prime.
+>
+> 2. **Skipping Even and Multiple of 3 Checks:**
+>       - The function then skips checking multiples of `2` and `3` by starting the loop from `5` and incrementing by `6` in each iteration (`i = i + 6`). This approach targets numbers of the form `6k ± 1`, where `k` is a whole number. This is based on the observation that all primes greater than `3` can be expressed as `6k ± 1`.
+>
+> 3. **Further Efficiency:**
+>       - Within the loop, the function checks for divisibility by `i` and `i + 2`. This covers both numbers of the form `6k - 1` and `6k + 1` in each iteration. By only considering these candidates, the method reduces the number of checks needed, further enhancing efficiency.
+>
+> 4. **Conclusion:**
+>       - If no divisors are found in this refined loop, the number `n` is confirmed to be prime.
+>
+> This method is particularly useful for checking large numbers, as it minimizes redundant operations and focuses on the most likely candidates for primality.
+
+```javascript
+function isPrime(n) {
+  // Return false if the number is 1.
+  if (n === 1) return false;
+
+  // Return true if the number is 2 or 3.
+  if (n === 2 || n === 3) return true;
+
+  // Return false if the number is divisible by 2 or 3.
+  if (n % 2 === 0 || n % 3 === 0) return false;
+
+  // Iterate from 5 to the square root of n, incrementing by 6 each time.
+  for (let i = 5; i * i <= n; i = i + 6) {
+    // Return false if the number is divisible by i or i + 2.
+    if (n % i === 0 || n % (i + 2) === 0) return false;
+  }
+
+  // If the loop completes without finding a divisor, return true.
+  return true;
+}
+```
+
+- **Time Complexity:** O(√n)
+- **Auxiliary Space:** O(1)
+<hr>
+
+###
