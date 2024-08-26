@@ -275,17 +275,28 @@ Check if a number is a prime number.
 
 ##### _Explanation_
 
-> This method of checking if a number `n` is prime leverages the property that a composite number must have a factor less than or equal to its square root. Instead of checking all numbers up to `n-1`, this approach reduces the number of checks by only considering divisors up to the square root of `n`.
+> This method of checking if a number `n` is prime takes the efficiency of the basic square root method a step further by incorporating additional optimizations. These optimizations focus on reducing unnecessary checks, making the process faster and more scalable for large numbers.
 >
 > **Core Idea:**
 >
-> 1. **Reducing the Number of Iterations:**
->       - Any non-prime number `n` can be factored into two factors, one of which is less than or equal to the square root of `n`. If `n` has a divisor greater than its square root, then it must also have a smaller divisor that is less than or equal to the square root.
+> 1. **Handling Small and Obvious Cases:**
+>       - The method quickly handles small numbers and obvious non-prime cases:
+>         - `n = 1` is not prime.
+>         - `n = 2` and `n = 3` are prime numbers.
+>         - Numbers divisible by `2` or `3` (except `2` and `3` themselves) are not prime.
 >
-> 2. **Efficient Divisibility Check:**
->       - By iterating only up to the square root of `n`, this method significantly reduces the number of checks needed to determine if `n` is prime, making it much more efficient, especially for large numbers.
+> 2. **Optimized Divisor Check:**
+>       - Instead of checking every number up to the square root of `n`, the method focuses on numbers that are more likely to be divisors:
+>         - It starts checking from `5` and increments by `6` in each loop iteration. This effectively tests numbers of the form `6k ± 1`, which are the only possible forms that prime numbers greater than `3` can take.
+>         - This skips all even numbers and multiples of `3`, as they are already filtered out.
 >
-> This method is a common and effective way to check for primality, striking a balance between simplicity and computational efficiency.
+> 3. **Minimizing Checks:**
+>       - The loop checks divisibility by both `i` and `i + 2` in each iteration, covering two potential divisors at once. This reduces the number of iterations compared to a more straightforward approach.
+>
+> 4. **Conclusion:**
+>       - By combining these strategies, this method ensures that only the most likely divisors are considered, making it particularly efficient for determining the primality of large numbers.
+>
+> This approach balances advanced optimizations with a clear strategy, making it a highly efficient method for prime number checking, especially as the size of `n` increases.
 
 #### Solution 2: More Efficient Method (for large numbers)
 
