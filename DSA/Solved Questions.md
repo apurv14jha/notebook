@@ -296,21 +296,17 @@ Check if a number is a prime number.
 > **Core Idea:**
 >
 > 1. **Initial Special Cases:**
->       - The function first handles specific small cases:
->         - `n = 1` is immediately deemed non-prime.
->         - `n = 2` and `n = 3` are recognized as prime numbers.
->       - It also checks divisibility by `2` and `3` early on since any even number or a multiple of `3` (other than `2` and `3` themselves) cannot be prime.
->
+>    - The function first handles specific small cases:
+>      - `n = 1` is immediately deemed non-prime.
+>      - `n = 2` and `n = 3` are recognized as prime numbers.
+>    - It also checks divisibility by `2` and `3` early on since any even number or a multiple of `3` (other than `2` and `3` themselves) cannot be prime.
 > 2. **Skipping Even and Multiple of 3 Checks:**
->       - The function then skips checking multiples of `2` and `3` by starting the loop from `5` and incrementing by `6` in each iteration (`i = i + 6`). This approach targets numbers of the form `6k ± 1`, where `k` is a whole number. This is based on the observation that all primes greater than `3` can be expressed as `6k ± 1`.
->
+>    - The function then skips checking multiples of `2` and `3` by starting the loop from `5` and incrementing by `6` in each iteration (`i = i + 6`). This approach targets numbers of the form `6k ± 1`, where `k` is a whole number. This is based on the observation that all primes greater than `3` can be expressed as `6k ± 1`.
 > 3. **Further Efficiency:**
->       - Within the loop, the function checks for divisibility by `i` and `i + 2`. This covers both numbers of the form `6k - 1` and `6k + 1` in each iteration. By only considering these candidates, the method reduces the number of checks needed, further enhancing efficiency.
->
+>    - Within the loop, the function checks for divisibility by `i` and `i + 2`. This covers both numbers of the form `6k - 1` and `6k + 1` in each iteration. By only considering these candidates, the method reduces the number of checks needed, further enhancing efficiency.
 > 4. **Conclusion:**
->       - If no divisors are found in this refined loop, the number `n` is confirmed to be prime.
->
-> This method is particularly useful for checking large numbers, as it minimizes redundant operations and focuses on the most likely candidates for primality.
+>    - If no divisors are found in this refined loop, the number `n` is confirmed to be prime.
+>      This method is particularly useful for checking large numbers, as it minimizes redundant operations and focuses on the most likely candidates for primality.
 
 ```javascript
 function isPrime(n) {
