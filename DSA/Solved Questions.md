@@ -479,7 +479,7 @@ function getPrimeFactors(n) {
 ```
 
 - **Time Complexity:** O(√n)
-- **Auxiliary Space:** O(1)
+- **Auxiliary Space:** O(log n)
 <hr>
 
 ###
