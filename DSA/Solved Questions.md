@@ -288,6 +288,29 @@ Check if a number is a prime number.
 >
 > This method is a common and effective way to check for primality, striking a balance between simplicity and computational efficiency.
 
+```javascript
+function isPrime(n) {
+  // If the number is 1, return false
+  if (n === 1) {
+    return false;
+  }
+
+  // Iterate through all numbers from 2 to the square root of n
+  for (let i = 2; i * i <= n; i++) {
+    // If n is divisible by i, return false
+    if (n % i === 0) {
+      return false;
+    }
+  }
+
+  // If the loop completes without finding a divisor, return true
+  return true;
+}
+```
+
+- **Time Complexity:** O(√n)
+- **Auxiliary Space:** O(1)
+
 #### Solution 2: More Efficient Method (for large numbers)
 
 ##### _Explanation_
@@ -328,6 +351,130 @@ function isPrime(n) {
 
   // If the loop completes without finding a divisor, return true.
   return true;
+}
+```
+
+- **Time Complexity:** O(√n)
+- **Auxiliary Space:** O(1)
+<hr>
+
+### Prime Factors
+
+Find all the prime factors of a number.
+
+#### Solution 1: Efficient Method
+
+```javascript
+function getPrimeFactors(n) {
+  // If the number is less than or equal to 1, return an empty array
+  if (n <= 1) return [];
+
+  // Create a constant array to store the prime factors
+  const result = [];
+
+  // Create a temporary variable to avoid modifying the original argument
+  let temp = n;
+
+  // Iterate through all numbers from 2 to the square root of the temporary value
+  for (let i = 2; i * i <= temp; i++) {
+    // While the current number i divides the temporary value evenly:
+    while (temp % i === 0) {
+      // Add i to the result array as a prime factor
+      result.push(i);
+      // Divide the temporary value by i to remove the factor
+      temp = temp / i;
+    }
+  }
+
+  // If the remaining temporary value is greater than 1, it's a prime factor
+  if (temp > 1) {
+    result.push(temp);
+  }
+
+  // Return the array of prime factors
+  return result;
+}
+```
+
+- **Time Complexity:** O(√n)
+- **Auxiliary Space:** O(1)
+
+#### Solution 2: More Efficient Method
+
+##### _Explanation_
+
+> This method enhances the efficiency of finding prime factors by incorporating optimizations similar to those used in efficient prime-checking algorithms. It is particularly useful for large numbers, as it reduces the number of iterations needed to determine all prime factors.
+>
+> **Core Idea:**
+>
+> 1. **Initial Special Cases:**
+>    - The function first checks for small cases:
+>      - If `n` is less than or equal to `1`, the function returns an empty array since there are no prime factors.
+>    - It then handles divisibility by `2` and `3`, the smallest prime numbers, as special cases:
+>      - All factors of `2` and `3` are removed from `n` in two separate while loops. This is done before considering larger potential factors, which makes the subsequent loop more efficient.
+> 2. **Skipping Even and Multiple of 3 Checks:**
+>    - After handling `2` and `3`, the function skips checking multiples of `2` and `3` by starting the loop from `5` and incrementing by `6` in each iteration (`i = i + 6`). This approach focuses on numbers of the form `6k ± 1`, as primes greater than `3` can be expressed in this way.
+> 3. **Efficient Prime Factorization:**
+>    - Within the loop, the function checks divisibility by `i` and `i + 2`:
+>      - For each `i`, it repeatedly divides `n` by `i` if `i` is a factor, adding `i` to the result array each time.
+>      - It then checks and does the same for `i + 2`, covering both numbers of the form `6k - 1` and `6k + 1`.
+> 4. **Handling Remaining Prime Factors:**
+>    - After the loop completes, if any prime factor greater than `3` remains (i.e., `temp > 3`), it is added to the result array. This accounts for cases where `n` itself is a prime number greater than `3` or a product of large prime factors.
+> 5. **Conclusion:**
+>    - The function returns an array containing all prime factors of `n`. The optimizations significantly reduce unnecessary operations, making it particularly effective for large numbers.
+
+```javascript
+function getPrimeFactors(n) {
+  // If the number is less than or equal to 1, return an empty array
+  if (n <= 1) return [];
+
+  // Create an array to store the prime factors
+  const result = [];
+
+  // Create a temporary variable to avoid modifying the original argument
+  let temp = n;
+
+  // While the 2 divides the temporary value evenly:
+  while (temp % 2 === 0) {
+    // Add 2 to the result array
+    result.push(2);
+    // Divide the temporary value by 2
+    temp = temp / 2;
+  }
+  // While the 2 divides the temporary value evenly:
+  while (temp % 3 === 0) {
+    // Add 3 to the result array
+    result.push(3);
+    // Divide the temporary value by 3
+    temp = temp / 3;
+  }
+
+  // Iterate through all numbers from 5 to the square root of the temporary value
+  for (let i = 5; i * i <= temp; i = i + 6) {
+    // While the current number i divides the temporary value evenly:
+    while (temp % i === 0) {
+      // Add i to the result array
+      result.push(i);
+      // Divide the temporary value by i
+      temp = temp / i;
+    }
+
+    // Check for the next possible prime factor (i + 2)
+    while (temp % (i + 2) === 0) {
+      // Add (i + 2) to the result array
+      result.push(i + 2);
+      // Divide the temporary value by (i + 2)
+      temp = temp / (i + 2);
+    }
+  }
+
+  // If the remaining temporary value is greater than 3, add it to the result array
+  if (temp > 3) {
+    result.push(temp);
+  }
+
+  // Return the array of prime factors
+  return result;
 }
 ```
 
