@@ -482,4 +482,197 @@ function getPrimeFactors(n) {
 - **Auxiliary Space:** O(log n)
 <hr>
 
+### All Divisors of a Number
+
+#### Solution
+
+```javascript
+function printDivisors(n) {
+  // Create an empty array to store the divisors
+  let result = [];
+
+  // Iterate through all numbers from 1 to the square root of n
+  for (let i = 1; i * i <= n; i++) {
+    // If i is a divisor of n, add it to the result array
+    if (n % i === 0) {
+      result.push(i);
+      // If i is not the square root of n, add n/i to the result array as well
+      if (i !== n / i) result.push(n / i);
+    }
+  }
+
+  // Return the array containing all divisors
+  return result;
+}
+```
+
+- **Time Complexity:** O(√n)
+- **Auxiliary Space:** O(d), where d is the number of divisors
+<hr>
+
+### Sieve of Eratosthenes
+
+#### Solution 1: Simple Implementation
+
+##### _Explanation_
+
+> The Sieve of Eratosthenes is an efficient algorithm to find all prime numbers up to a given limit `n`. It systematically eliminates the multiples of each prime number starting from 2.
+>
+> **Core Idea:**
+>
+> 1. **Initialization:**
+>
+>    - Create a boolean array `isPrime` of size `n+1` and initialize all entries as `true`. The index of the array represents the number itself.
+>
+> 2. **Marking Non-Primes:**
+>
+>    - Starting from the first prime number (2), mark all its multiples as `false` in the `isPrime` array.
+>    - Move to the next number in the array that is still marked as `true` and repeat the process.
+>    - Continue this process up to the square root of `n`.
+>
+> 3. **Collecting Primes:**
+>
+>    - After marking the multiples of all primes up to the square root of `n`, the remaining `true` entries in the `isPrime` array represent prime numbers.
+>
+> This method is highly efficient for generating a list of primes up to a large number, with a time complexity of **O(n log log n)** and a space complexity of **O(n)**.
+
+```javascript
+function sieve(n) {
+  // Create an empty array to store the prime numbers
+  let result = [];
+
+  // Create a boolean array of size n+1, initially all elements are true
+  let isPrime = new Array(n + 1).fill(true);
+
+  // Iterate from 2 to the square root of n
+  for (let i = 2; i * i <= n; i++) {
+    // If i is prime (isPrime[i] is true)
+    if (isPrime[i]) {
+      // Mark all multiples of i as not prime
+      for (let j = 2 * i; j <= n; j = j + i) {
+        isPrime[j] = false;
+      }
+    }
+  }
+
+  // Iterate from 2 to n
+  for (let i = 2; i <= n; i++) {
+    // If i is prime (isPrime[i] is true)
+    if (isPrime[i]) {
+      // Add i to the result array
+      result.push(i);
+    }
+  }
+
+  // Return the array of prime numbers
+  return result;
+}
+```
+
+- **Time Complexity:** O(n log log n)
+- **Auxiliary Space:** O(n)
+
+#### Solution 2: Optimized Implementation
+
+##### _Explanation_
+
+> In the optimized implementation, we start marking multiples from `i * i` instead of `2 * i` because any smaller multiple of `i` would have already been marked by a smaller prime factor. For example, if `i = 5`, the multiples `2 * 5`, `3 * 5`, and `4 * 5` would have already been marked by the primes `2`, `3`, and `2` respectively. Therefore, we can safely start from `i * i` to avoid redundant operations.
+
+```javascript
+function sieve(n) {
+  // Create an empty array to store the prime numbers
+  let result = [];
+
+  // Initialize an array of size n+1 with true values
+  let isPrime = new Array(n + 1).fill(true);
+
+  // Mark non-prime numbers
+  for (let i = 2; i * i <= n; i++) {
+    if (isPrime[i]) {
+      // Mark multiples of i as false
+      for (let j = i * i; j <= n; j += i) {
+        isPrime[j] = false;
+      }
+    }
+  }
+
+  // Collect all prime numbers
+  for (let i = 2; i <= n; i++) {
+    if (isPrime[i]) result.push(i);
+  }
+
+  // Return the array containing all prime numbers
+  return result;
+}
+```
+
+- **Time Complexity:** O(n log log n)
+- **Auxiliary Space:** O(n)
+<hr>
+
+### Computing Power
+
+#### Solution
+
+```javascript
+function myPow(x, n) {
+  // Base case: If the exponent is 0, the result is 1.
+  if (n === 0) return 1;
+
+  // Calculate the power of x raised to n/2.
+  let temp = myPow(x, Math.floor(n / 2));
+
+  // Square the result to get x^(n/2 * 2) = x^n.
+  temp = temp * temp;
+
+  // If n is even, the result is x^n.
+  if (n % 2 === 0) {
+    return temp;
+  }
+  // If n is odd, the result is x^n = x^(n-1) * x.
+  else {
+    return temp * x;
+  }
+}
+```
+
+- **Time Complexity:** O(log n)
+- **Auxiliary Space:** O(log n)
+<hr>
+
+### Iterative Power
+
+#### Solution
+
+```javascript
+function myPow(x, n) {
+  // Store the original exponent for later use.
+  let temp = n;
+
+  // Initialize the result to 1.
+  let res = 1;
+
+  // Iterate until the exponent becomes 0.
+  while (n > 0) {
+    // If the exponent is odd, multiply the result by the base.
+    if (n % 2 !== 0) {
+      res = res * x;
+    }
+
+    // Square the base to reduce the exponent by half.
+    x = x * x;
+
+    // Update the exponent to its integer division by 2.
+    n = Math.floor(n / 2);
+  }
+
+  // Return the final result.
+  return res;
+}
+```
+
+- **Time Complexity:** O(log n)
+- **Auxiliary Space:** O(1)
+<hr>
+
 ###
